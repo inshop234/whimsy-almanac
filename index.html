@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Little Whimsy Almanac</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,700&family=Quicksand:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink: #1b1730;
+    --ink-deep: #120f24;
+    --plum: #3a2e52;
+    --gold: #e8b34c;
+    --gold-soft: #f3cd7e;
+    --parchment: #f4e9d4;
+    --parchment-dim: #e9dcc2;
+    --rose: #c1666b;
+    --moss: #6b8f71;
+    --ink-text: #2a2440;
+  }
+
+  *{ box-sizing: border-box; }
+
+  html{ scroll-behavior: smooth; }
+
+  body{
+    margin:0;
+    background: radial-gradient(ellipse at top, #241d3d 0%, var(--ink) 45%, var(--ink-deep) 100%);
+    color: var(--parchment);
+    font-family: 'Quicksand', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a{ color: inherit; }
+
+  :focus-visible{
+    outline: 2px solid var(--gold-soft);
+    outline-offset: 3px;
+  }
+
+  .stars{
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,.5), transparent),
+      radial-gradient(1px 1px at 80% 10%, rgba(255,255,255,.4), transparent),
+      radial-gradient(1px 1px at 60% 70%, rgba(255,255,255,.35), transparent),
+      radial-gradient(1px 1px at 30% 85%, rgba(255,255,255,.45), transparent),
+      radial-gradient(1px 1px at 90% 50%, rgba(255,255,255,.3), transparent),
+      radial-gradient(1px 1px at 45% 40%, rgba(255,255,255,.4), transparent);
+    background-size: 100% 100%;
+    z-index: 0;
+  }
+
+  .wrap{
+    position: relative;
+    z-index: 1;
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 0 24px 100px;
+  }
+
+  /* ---------- Hero ---------- */
+
+  .hero{
+    text-align: center;
+    padding: 90px 0 50px;
+  }
+
+  .candle{
+    width: 34px;
+    height: 46px;
+    margin: 0 auto 22px;
+    position: relative;
+  }
+  .candle .body{
+    position:absolute; bottom:0; left:50%;
+    width:16px; height:34px; margin-left:-8px;
+    background: linear-gradient(180deg, var(--parchment), var(--parchment-dim));
+    border-radius: 2px 2px 4px 4px;
+  }
+  .candle .flame{
+    position:absolute; top:-14px; left:50%;
+    width:10px; height:16px; margin-left:-5px;
+    background: radial-gradient(circle at 50% 70%, var(--gold-soft), var(--gold) 60%, transparent 80%);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    transform-origin: 50% 90%;
+    animation: flicker 2.6s ease-in-out infinite;
+    filter: drop-shadow(0 0 8px var(--gold));
+  }
+  @keyframes flicker{
+    0%, 100% { transform: rotate(-2deg) scaleY(1); }
+    25% { transform: rotate(2deg) scaleY(1.05); }
+    50% { transform: rotate(-1deg) scaleY(0.96); }
+    75% { transform: rotate(3deg) scaleY(1.02); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .candle .flame{ animation: none; }
+  }
+
+  .eyebrow{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--gold-soft);
+    margin-bottom: 14px;
+  }
+
+  h1{
+    font-family: 'Fraunces', serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-size: clamp(34px, 6vw, 56px);
+    line-height: 1.05;
+    margin: 0 0 14px;
+    color: var(--parchment);
+  }
+
+  .hero p{
+    font-size: 16px;
+    max-width: 480px;
+    margin: 0 auto;
+    color: #cfc4e8;
+    line-height: 1.6;
+  }
+
+  /* ---------- Ribbon nav ---------- */
+
+  .ribbons{
+    display:flex;
+    justify-content:center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 34px;
+  }
+  .ribbon{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: .05em;
+    padding: 9px 16px 10px;
+    border-radius: 3px 3px 8px 8px;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    background: var(--plum);
+    color: var(--parchment);
+    transition: transform .15s ease, background .2s ease;
+  }
+  .ribbon:hover{ transform: translateY(2px); }
+  .ribbon.door{ background: #5a4a7a; }
+  .ribbon.potion{ background: #6e3a44; }
+  .ribbon.life{ background: #3e5f47; }
+  .ribbon.dragon{ background: #a8562e; }
+
+  /* ---------- Ritual pages ---------- */
+
+  .page{
+    background: var(--parchment);
+    color: var(--ink-text);
+    border-radius: 14px;
+    padding: 40px clamp(20px, 5vw, 48px);
+    margin-top: 54px;
+    box-shadow: 0 20px 50px rgba(0,0,0,.35);
+    position: relative;
+    scroll-margin-top: 30px;
+  }
+
+  .page::before{
+    content: "";
+    position: absolute;
+    top: 0; left: 28px; right: 28px;
+    height: 3px;
+    border-radius: 0 0 4px 4px;
+  }
+  .page.door::before{ background: #5a4a7a; }
+  .page.potion::before{ background: #6e3a44; }
+  .page.life::before{ background: #3e5f47; }
+  .page.dragon::before{ background: #a8562e; }
+
+  .page h2{
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 28px;
+    margin: 0 0 6px;
+  }
+
+  .page .sub{
+    font-size: 14px;
+    color: #6b6280;
+    margin-bottom: 26px;
+  }
+
+  .divider{
+    border: none;
+    border-top: 1px dashed #cbb98f;
+    margin: 26px 0;
+  }
+
+  /* Door page */
+
+  .doors{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 22px;
+  }
+  .door-btn{
+    width: 62px; height: 62px;
+    border-radius: 50%;
+    border: 3px solid rgba(0,0,0,.15);
+    cursor: pointer;
+    transition: transform .15s ease, box-shadow .15s ease;
+    position: relative;
+  }
+  .door-btn:hover{ transform: scale(1.08); }
+  .door-btn.selected{ box-shadow: 0 0 0 4px var(--ink-text) inset; }
+  .door-btn[data-color="red"]{ background:#b5453f; }
+  .door-btn[data-color="blue"]{ background:#3f6fa8; }
+  .door-btn[data-color="green"]{ background:#4f8a5b; }
+  .door-btn[data-color="yellow"]{ background:#d8ab3d; }
+  .door-btn[data-color="purple"]{ background:#7a58a3; }
+  .door-btn[data-color="pink"]{ background:#d488a4; }
+
+  .result-box{
+    background: #fffaf0;
+    border: 1px solid #e2d3ac;
+    border-radius: 10px;
+    padding: 18px 20px;
+    min-height: 26px;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  .result-box .surprise{
+    display:block;
+    margin-top: 8px;
+    font-style: italic;
+    color: #8a7f63;
+    font-size: 13.5px;
+  }
+  .result-box.empty{ color: #9b9282; font-style: italic; }
+
+  /* Potion page */
+
+  .chip-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .chip{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12.5px;
+    padding: 7px 12px;
+    border-radius: 20px;
+    background: #f0e2c8;
+    border: 1px solid #d9c69a;
+    color: #6e3a44;
+  }
+  .chip-label{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: #8a7f63;
+    margin: 18px 0 8px;
+  }
+
+  .flask{
+    width: 40px; height: 46px;
+    margin: 0 auto 14px;
+    position: relative;
+  }
+  .flask svg{ width:100%; height:100%; display:block; }
+  .bubble{
+    animation: rise 2.4s ease-in infinite;
+    transform-origin: center;
+  }
+  .bubble:nth-child(2){ animation-delay: .5s; }
+  .bubble:nth-child(3){ animation-delay: 1.1s; }
+  @keyframes rise{
+    0% { transform: translateY(0) scale(.6); opacity: 0; }
+    30%{ opacity: 1; }
+    100% { transform: translateY(-14px) scale(1); opacity: 0; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .bubble{ animation: none; opacity: .8; }
+  }
+
+  /* Life page */
+
+  .life-grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-top: 20px;
+  }
+  .life-card{
+    background: #fffaf0;
+    border: 1px solid #d9e6da;
+    border-left: 3px solid var(--moss);
+    border-radius: 8px;
+    padding: 12px 14px;
+  }
+  .life-card .k{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: #7c8c7d;
+    display:block;
+    margin-bottom: 4px;
+  }
+  .life-card .v{
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .life-twist{
+    margin-top: 14px;
+    background: #fffaf0;
+    border: 1px solid #d9e6da;
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-size: 14.5px;
+    font-style: italic;
+    color: #4a5a4c;
+  }
+
+  /* Dragon page */
+
+  .egg{
+    width: 46px; height: 56px;
+    margin: 0 auto 14px;
+    position: relative;
+  }
+  .egg svg{ width:100%; height:100%; display:block; }
+  .egg.shaking{ animation: wobble .5s ease-in-out; }
+  @keyframes wobble{
+    0%, 100% { transform: rotate(0deg); }
+    20% { transform: rotate(-6deg); }
+    40% { transform: rotate(5deg); }
+    60% { transform: rotate(-4deg); }
+    80% { transform: rotate(3deg); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .egg.shaking{ animation: none; }
+  }
+
+  .dragon-grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-top: 8px;
+  }
+  .dragon-card{
+    background: #fffaf0;
+    border: 1px solid #ecd9c4;
+    border-left: 3px solid #a8562e;
+    border-radius: 8px;
+    padding: 12px 14px;
+  }
+  .dragon-card .k{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: #a1876f;
+    display:block;
+    margin-bottom: 4px;
+  }
+  .dragon-card .v{
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  /* ---------- Wax seal button ---------- */
+
+  .seal{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: #fff3e0;
+    border: none;
+    border-radius: 50px;
+    padding: 13px 28px;
+    cursor: pointer;
+    position: relative;
+    transition: transform .08s ease;
+  }
+  .seal:active{ transform: scale(.94); }
+  .seal.door{ background: linear-gradient(160deg, #7d5aa8, #5a4a7a); }
+  .seal.potion{ background: linear-gradient(160deg, #a5535e, #6e3a44); }
+  .seal.life{ background: linear-gradient(160deg, #598a63, #3e5f47); }
+  .seal.dragon{ background: linear-gradient(160deg, #d97b45, #a8562e); }
+
+  .stamp-ring{
+    position: absolute;
+    inset: -6px;
+    border-radius: 50px;
+    border: 2px solid currentColor;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .stamp-ring.go{
+    animation: stamp .5s ease-out;
+  }
+  @keyframes stamp{
+    0% { opacity: .9; transform: scale(.85); }
+    100% { opacity: 0; transform: scale(1.35); }
+  }
+
+  footer{
+    text-align:center;
+    color: #8478a3;
+    font-size: 12.5px;
+    margin-top: 70px;
+    font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: .04em;
+  }
+</style>
+</head>
+<body>
+
+<div class="stars"></div>
+
+<div class="wrap">
+
+  <div class="hero">
+    <div class="candle"><div class="body"></div><div class="flame"></div></div>
+    <div class="eyebrow">three small rituals</div>
+    <h1>The Little Whimsy&nbsp;Almanac</h1>
+    <p>A doorway to knock on, a potion to brew, a life to try on for size. Pick a page and see what the evening gives you.</p>
+
+    <div class="ribbons">
+      <a class="ribbon door" href="#door-page">The Door</a>
+      <a class="ribbon potion" href="#potion-page">The Potion</a>
+      <a class="ribbon life" href="#life-page">The Life</a>
+      <a class="ribbon dragon" href="#dragon-page">The Dragon</a>
+    </div>
+  </div>
+
+  <!-- DOOR -->
+  <section class="page door" id="door-page">
+    <h2>The Door</h2>
+    <div class="sub">Six doors. One choice. No taking it back.</div>
+
+    <div class="doors" id="doorRow">
+      <button class="door-btn" data-color="red" aria-label="Red door"></button>
+      <button class="door-btn" data-color="blue" aria-label="Blue door"></button>
+      <button class="door-btn" data-color="green" aria-label="Green door"></button>
+      <button class="door-btn" data-color="yellow" aria-label="Yellow door"></button>
+      <button class="door-btn" data-color="purple" aria-label="Purple door"></button>
+      <button class="door-btn" data-color="pink" aria-label="Pink door"></button>
+    </div>
+
+    <div class="result-box empty" id="doorResult">Choose a door to open it.</div>
+  </section>
+
+  <!-- POTION -->
+  <section class="page potion" id="potion-page">
+    <h2>The Potion</h2>
+    <div class="sub">Every brew pulls one ingredient and one effect from the shelf, at random.</div>
+
+    <div class="chip-label">ingredients on the shelf</div>
+    <div class="chip-row" id="ingredientChips"></div>
+
+    <div class="chip-label">effects it might carry</div>
+    <div class="chip-row" id="effectChips"></div>
+
+    <hr class="divider">
+
+    <div class="flask" aria-hidden="true">
+      <svg viewBox="0 0 40 46">
+        <path d="M14 4 H26 V16 L34 38 A4 4 0 0 1 30 44 H10 A4 4 0 0 1 6 38 L14 16 Z"
+              fill="#f0e2c8" stroke="#c9985f" stroke-width="1.5"/>
+        <circle class="bubble" cx="17" cy="34" r="2" fill="#c1666b"/>
+        <circle class="bubble" cx="22" cy="30" r="1.6" fill="#c1666b"/>
+        <circle class="bubble" cx="19" cy="26" r="1.3" fill="#c1666b"/>
+      </svg>
+    </div>
+
+    <div style="text-align:center; margin-bottom:18px;">
+      <button class="seal potion" id="brewBtn">Brew a potion<span class="stamp-ring" id="brewRing"></span></button>
+    </div>
+
+    <div class="result-box empty" id="potionResult">No potion brewed yet.</div>
+  </section>
+
+  <!-- LIFE -->
+  <section class="page life" id="life-page">
+    <h2>The Life</h2>
+    <div class="sub">Roll a whole life: a career, a pet, a home, a talent, and the twist that changes it all.</div>
+
+    <div style="text-align:center; margin: 22px 0;">
+      <button class="seal life" id="rollBtn">Roll my life<span class="stamp-ring" id="rollRing"></span></button>
+    </div>
+
+    <div class="life-grid" id="lifeGrid"></div>
+    <div class="life-twist" id="lifeTwist" style="display:none;"></div>
+  </section>
+
+  <!-- DRAGON -->
+  <section class="page dragon" id="dragon-page">
+    <h2>The Dragon</h2>
+    <div class="sub">An egg has been left on your doorstep. Something is about to hatch.</div>
+
+    <div class="egg" id="egg" aria-hidden="true">
+      <svg viewBox="0 0 46 56">
+        <path d="M23 2 C34 2 42 20 42 36 C42 48 34 54 23 54 C12 54 4 48 4 36 C4 20 12 2 23 2 Z"
+              fill="#f0e2c8" stroke="#c9985f" stroke-width="1.5"/>
+        <circle cx="17" cy="24" r="2.4" fill="#d97b45" opacity=".55"/>
+        <circle cx="28" cy="34" r="1.8" fill="#a8562e" opacity=".45"/>
+        <circle cx="20" cy="42" r="1.4" fill="#d97b45" opacity=".4"/>
+      </svg>
+    </div>
+
+    <div style="text-align:center; margin-bottom:18px;">
+      <button class="seal dragon" id="hatchBtn">Hatch a dragon<span class="stamp-ring" id="hatchRing"></span></button>
+    </div>
+
+    <div class="result-box empty" id="dragonEmpty">No dragon has hatched yet.</div>
+    <div class="dragon-grid" id="dragonGrid"></div>
+  </section>
+
+  <footer>drawn up by candlelight &middot; refresh for a fresh almanac</footer>
+
+</div>
+
+<script>
+  // ---------- DOOR ----------
+  const doorRooms = {
+    red: "You find a room filled with treasure.",
+    blue: "You find a room filled with water and fish swimming around.",
+    green: "You find a room filled with plants and flowers blooming.",
+    yellow: "You find a room filled with sunshine and warmth.",
+    purple: "You find a room filled with magic and mystical creatures.",
+    pink: "You find a room filled with candy and sweets.",
+  };
+  const surprises = [
+    "A gentle breeze carries the scent of something wonderful.",
+    "You hear soft, distant music, though no one else is here.",
+    "A tiny glowing creature peeks out and waves at you.",
+    "The air sparkles faintly, like magic dust settling.",
+    "Something rustles nearby... but it's friendly.",
+  ];
+
+  const doorRow = document.getElementById('doorRow');
+  const doorResult = document.getElementById('doorResult');
+
+  doorRow.addEventListener('click', (e) => {
+    const btn = e.target.closest('.door-btn');
+    if (!btn) return;
+
+    doorRow.querySelectorAll('.door-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+
+    const color = btn.dataset.color;
+    const room = doorRooms[color];
+    const surprise = surprises[Math.floor(Math.random() * surprises.length)];
+
+    doorResult.classList.remove('empty');
+    doorResult.innerHTML = `You open the ${color} door... ${room}<span class="surprise">${surprise}</span>`;
+  });
+
+  // ---------- POTION ----------
+  const ingredients = [
+    "misty dust", "crystal shard", "moonflower petal", "sunstone fragment",
+    "glimmering dew", "whispering wind essence", "glittery water droplet", "sparkling stardust",
+  ];
+  const effects = [
+    "grants temporary invisibility", "enhances magical abilities", "boosts energy and vitality",
+    "induces a state of euphoria", "provides protection against dark forces",
+    "allows communication with mystical creatures", "increases luck and fortune",
+    "heals minor wounds and ailments",
+  ];
+
+  const ingredientChips = document.getElementById('ingredientChips');
+  const effectChips = document.getElementById('effectChips');
+  ingredients.forEach(i => ingredientChips.insertAdjacentHTML('beforeend', `<span class="chip">${i}</span>`));
+  effects.forEach(fx => effectChips.insertAdjacentHTML('beforeend', `<span class="chip">${fx}</span>`));
+
+  const brewBtn = document.getElementById('brewBtn');
+  const brewRing = document.getElementById('brewRing');
+  const potionResult = document.getElementById('potionResult');
+
+  brewBtn.addEventListener('click', () => {
+    const ingredient = ingredients[Math.floor(Math.random() * ingredients.length)];
+    const effect = effects[Math.floor(Math.random() * effects.length)];
+
+    potionResult.classList.remove('empty');
+    potionResult.innerHTML = `You added <strong>${ingredient}</strong>.<br>Your potion ${effect}.`;
+
+    brewRing.classList.remove('go');
+    void brewRing.offsetWidth;
+    brewRing.classList.add('go');
+  });
+
+  // ---------- LIFE ----------
+  const jobs = ["Youtuber","Streamer","Programmer","Artist","Writer","Musician","Designer","Engineer","Teacher","Scientist","Game Designer","Animator","Photographer","Chef","Actor","Dancer","Athlete","Entrepreneur","Doctor","Lawyer"];
+  const pets = ["Dog","Cat","Bird","Fish","Hamster","Rabbit","Turtle","Lizard","Snake","Frog","Ferret","Guinea Pig","Parrot","Chinchilla","Hedgehog","Tarantula","Scorpion","Gecko","Iguana","Axolotl"];
+  const homes = ["Apartment","House","Mansion","Castle","Cottage","Villa","Penthouse","Farmhouse","Cabin","Treehouse","Yurt","Igloo","Tent","Boat House","Lighthouse","Skyscraper","Bungalow","Chalet","Ranch","Dome"];
+  const talents = ["Singing","Dancing","Acting","Drawing","Writing","Cooking","Photography","Playing an Instrument","Coding","Sports","Magic Tricks","Public Speaking","Problem Solving","Leadership","Teaching","Designing","Storytelling","Crafting","Gardening","Meditation"];
+  const twists = ["You discover a hidden talent that changes your life.","You meet a mentor who guides you to success.","You face a challenge that tests your skills and determination.","You receive an unexpected opportunity that propels you forward.","You encounter a rival who pushes you to improve.","You experience a setback that teaches you resilience.","You find inspiration in an unlikely place.","You make a decision that alters your path significantly.","You uncover a secret that changes your perspective.","You achieve a breakthrough that leads to recognition and success.","You become famous.","You move to another country."];
+
+  const pick = arr => arr[Math.floor(Math.random() * arr.length)];
+
+  const rollBtn = document.getElementById('rollBtn');
+  const rollRing = document.getElementById('rollRing');
+  const lifeGrid = document.getElementById('lifeGrid');
+  const lifeTwist = document.getElementById('lifeTwist');
+
+  rollBtn.addEventListener('click', () => {
+    const stats = [
+      ['career', pick(jobs)],
+      ['pet', pick(pets)],
+      ['home', pick(homes)],
+      ['talent', pick(talents)],
+    ];
+
+    lifeGrid.innerHTML = stats.map(([k, v]) =>
+      `<div class="life-card"><span class="k">${k}</span><span class="v">${v}</span></div>`
+    ).join('');
+
+    lifeTwist.style.display = 'block';
+    lifeTwist.textContent = pick(twists);
+
+    rollRing.classList.remove('go');
+    void rollRing.offsetWidth;
+    rollRing.classList.add('go');
+  });
+
+  // ---------- DRAGON ----------
+  const dragonNames = ["Flamewing","Shadowclaw","Mochi","Sparkletoes","Bubbles","Whiskerflame","Frostbite","Toothless","Emberstorm","Luna"];
+  const dragonColors = ["Crimson Red","Midnight Black","Pink","Golden Yellow","Sky Blue","Emerald Green","Silver","Violet","Orange","White"];
+  const dragonPowers = ["Fire Breath","Invisibility","Water Manipulation","makes unlimited pancakes","Lightning Strike","Ice Shards","Earthquake","controls the weather","Telekinesis","Time Manipulation"];
+
+  const egg = document.getElementById('egg');
+  const hatchBtn = document.getElementById('hatchBtn');
+  const hatchRing = document.getElementById('hatchRing');
+  const dragonEmpty = document.getElementById('dragonEmpty');
+  const dragonGrid = document.getElementById('dragonGrid');
+
+  hatchBtn.addEventListener('click', () => {
+    egg.classList.remove('shaking');
+    void egg.offsetWidth;
+    egg.classList.add('shaking');
+
+    const stats = [
+      ['name', pick(dragonNames)],
+      ['color', pick(dragonColors)],
+      ['power', pick(dragonPowers)],
+    ];
+
+    dragonEmpty.style.display = 'none';
+    dragonGrid.innerHTML = stats.map(([k, v]) =>
+      `<div class="dragon-card"><span class="k">${k}</span><span class="v">${v}</span></div>`
+    ).join('');
+
+    hatchRing.classList.remove('go');
+    void hatchRing.offsetWidth;
+    hatchRing.classList.add('go');
+  });
+</script>
+
+</body>
+</html>
